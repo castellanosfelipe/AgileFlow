@@ -1,0 +1,1 @@
+ALTER TYPE "IssueType" ADD VALUE IF NOT EXISTS 'subtask';

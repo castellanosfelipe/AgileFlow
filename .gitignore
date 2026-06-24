@@ -1,0 +1,16 @@
+node_modules
+.next
+.env
+.env.local
+.vercel
+playwright-report
+test-results
+coverage
+*.tsbuildinfo
+public/uploads
+backups
+outputs
+work
+*.log
+.next-dev.log
+.next-dev.err.log
