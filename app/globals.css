@@ -2,42 +2,407 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── AGILEFLOW DESIGN SYSTEM v1.0 ─────────────────────────────────────────
+   Palette: Graphite + Electric Cobalt + Data Amber
+   Principle: Blue = doing. Amber = knowing.
+   Dark is the default. Light is the override.
+──────────────────────────────────────────────────────────────────────────── */
+
 @layer base {
+
+  /* ── DARK MODE (default / root) ─────────────────────────────────────── */
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 12%;
-    --primary: 160 84% 28%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 37 90% 92%;
-    --secondary-foreground: 31 58% 19%;
-    --muted: 240 5% 94%;
-    --muted-foreground: 240 4% 38%;
-    --accent: 178 42% 90%;
-    --accent-foreground: 184 68% 18%;
-    --destructive: 0 72% 48%;
+    /* Foundation */
+    --canvas:          222 26%  7%;   /* #0D1117 — deep graphite-blue */
+    --surface-01:      222 26% 12%;   /* #161C28 — sidebars, panels */
+    --surface-02:      222 29% 16%;   /* #1C2336 — cards, modals */
+    --surface-03:      222 28% 20%;   /* #232C42 — hover, active rows */
+    --border-subtle:   220 32% 18%;   /* #1E2A3E — near-invisible dividers */
+    --border-strong:   220 30% 26%;   /* #2D3D57 — interactive borders */
+
+    /* Text */
+    --text-primary:    220 33% 92%;   /* #E4E8F5 — main content */
+    --text-secondary:  220 22% 59%;   /* #7B8BAF — metadata, labels */
+    --text-disabled:   220 24% 32%;   /* #3D4A64 — inactive elements */
+    --text-inverse:    222 26%  7%;   /* #0D1117 — on light backgrounds */
+
+    /* Brand */
+    --brand-primary:   220 100% 62%;  /* #3D7EFF — electric cobalt */
+    --brand-secondary: 220 100% 71%;  /* #6898FF — hover states */
+    --accent-data:      38  91% 55%;  /* #F5A623 — analytics layer only */
+
+    /* Semantic status */
+    --status-todo:        215  16% 47%;  /* #64748B — neutral, not started */
+    --status-in-progress: 220 100% 62%;  /* #3D7EFF — same as brand */
+    --status-in-review:   258  93% 76%;  /* #A78BFA — measured violet */
+    --status-done:        142  71% 45%;  /* #22C55E — emerald success */
+    --status-blocked:       0  90% 60%;  /* #F43F5E — maximum attention */
+    --status-cancelled:   222  26%  9%;  /* #111827 — nearly invisible */
+
+    /* Chart palette (deuteranopia-safe: blue-amber axis primary) */
+    --chart-01:        220 100% 62%;  /* #3D7EFF — cobalt blue */
+    --chart-02:         38  91% 55%;  /* #F5A623 — amber */
+    --chart-03:        330  80% 60%;  /* #EC4899 — pink/magenta */
+    --chart-04:        174  72% 39%;  /* #14B8A6 — teal */
+    --chart-05:        258  93% 76%;  /* #A78BFA — soft violet */
+    --chart-06:        215  19% 65%;  /* #94A3B8 — steel gray */
+
+    /* Chart muted fills (use as area fills, 12% opacity via Tailwind) */
+    --chart-01-rgb: 61 126 255;
+    --chart-02-rgb: 245 166 35;
+    --chart-03-rgb: 236  72 153;
+    --chart-04-rgb:  20 184 166;
+    --chart-05-rgb: 167 139 250;
+    --chart-06-rgb: 148 163 184;
+
+    /* ── Tailwind semantic mapping (keep backward compat) ─────────────── */
+    --background:             var(--canvas);
+    --foreground:             var(--text-primary);
+    --card:                   var(--surface-02);
+    --card-foreground:        var(--text-primary);
+    --primary:                var(--brand-primary);
+    --primary-foreground:     0 0% 100%;
+    --secondary:              var(--surface-03);
+    --secondary-foreground:   var(--text-secondary);
+    --muted:                  var(--surface-01);
+    --muted-foreground:       var(--text-secondary);
+    --accent:                 var(--surface-03);
+    --accent-foreground:      var(--text-primary);
+    --destructive:            var(--status-blocked);
     --destructive-foreground: 0 0% 100%;
-    --border: 240 6% 86%;
-    --input: 240 6% 86%;
-    --ring: 160 84% 28%;
+    --border:                 var(--border-subtle);
+    --input:                  var(--border-strong);
+    --ring:                   var(--brand-primary);
+    --radius:                 6px;
+
+    /* ── Typography scale ─────────────────────────────────────────────── */
+    /* --font-display and --font-mono are injected by next/font variable classes on <html> */
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body:    var(--font-geist-sans, 'Geist', 'DM Sans', system-ui, sans-serif);
+    --font-mono:    'JetBrains Mono', 'Geist Mono', 'Fira Code', monospace;
+
+    /* ── Spacing scale (4px base, ×2 progression) ────────────────────── */
+    --space-1:  4px;
+    --space-2:  8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+
+    /* ── Motion ──────────────────────────────────────────────────────── */
+    --duration-micro:   150ms;
+    --duration-base:    250ms;
+    --duration-long:    350ms;
+    --duration-draw:    400ms;
+    --ease-out:         cubic-bezier(0.0, 0.0, 0.2, 1);
+    --ease-in:          cubic-bezier(0.4, 0.0, 1.0, 1);
+    --ease-both:        cubic-bezier(0.4, 0.0, 0.2, 1);
+
+    /* ── Layout regions ──────────────────────────────────────────────── */
+    --sidebar-width-expanded:  240px;
+    --sidebar-width-collapsed:  56px;
+    --topbar-height:            48px;
+    --detail-panel-width:      380px;
   }
 
+  /* ── LIGHT MODE override ─────────────────────────────────────────────── */
+  .light,
+  [data-theme="light"] {
+    --canvas:          220 18% 97%;   /* #F5F7FA — warm light gray */
+    --surface-01:        0  0% 100%;  /* #FFFFFF — pure white panels */
+    --surface-02:      220 22% 95%;   /* #EDF0F7 — cards */
+    --surface-03:      220 24% 92%;   /* #E2E7F2 — hover */
+    --border-subtle:   220 20% 90%;   /* #DDE2EF — dividers */
+    --border-strong:   220 22% 82%;   /* #C4CEDF — interactive borders */
+
+    --text-primary:    222 32% 11%;   /* #111827 — near-black */
+    --text-secondary:  222 22% 45%;   /* #5B6A8E — muted blue-gray */
+    --text-disabled:   222 16% 67%;   /* #9CA3B5 — inactive */
+    --text-inverse:      0  0% 100%;  /* #FFFFFF — on colored bg */
+
+    --brand-primary:   221  83% 53%;  /* #2563EB — slightly deeper blue */
+    --brand-secondary: 221  75% 47%;  /* #1D4ED8 — hover */
+    --accent-data:      38  93% 44%;  /* #D97706 — amber, darker for light */
+
+    --status-todo:        215  16% 57%;  /* #94A3B8 */
+    --status-in-progress: 221  83% 53%;  /* #2563EB */
+    --status-in-review:   258  80% 60%;  /* #7C3AED */
+    --status-done:        142  65% 36%;  /* #16A34A */
+    --status-blocked:       0  72% 51%;  /* #DC2626 */
+    --status-cancelled:   220  15% 83%;  /* #CBD5E1 */
+
+    /* Chart colors (same hue, adjusted for light background) */
+    --chart-01:        221  83% 53%;
+    --chart-02:         38  93% 44%;
+    --chart-03:        330  74% 52%;
+    --chart-04:        174  72% 31%;
+    --chart-05:        258  80% 60%;
+    --chart-06:        215  19% 47%;
+
+    /* Tailwind semantic remapping for light */
+    --background:         var(--canvas);
+    --foreground:         var(--text-primary);
+    --card:               var(--surface-01);
+    --card-foreground:    var(--text-primary);
+    --primary:            var(--brand-primary);
+    --primary-foreground: 0 0% 100%;
+    --secondary:          var(--surface-02);
+    --secondary-foreground: var(--text-secondary);
+    --muted:              var(--surface-02);
+    --muted-foreground:   var(--text-secondary);
+    --accent:             var(--surface-03);
+    --accent-foreground:  var(--text-primary);
+    --destructive:        var(--status-blocked);
+    --destructive-foreground: 0 0% 100%;
+    --border:             var(--border-subtle);
+    --input:              var(--border-strong);
+    --ring:               var(--brand-primary);
+  }
+
+  /* ── Base resets ─────────────────────────────────────────────────────── */
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Mono numbers for data contexts */
+  .font-data {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum" 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Focus ring — visible in both dark and light */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
+/* ── UTILITY CLASSES ─────────────────────────────────────────────────────── */
 @layer utilities {
+
+  /* Scrollbar */
   .scrollbar-thin {
     scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border-strong)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border-strong));
+    border-radius: 3px;
   }
 
+  /* Ticket code link */
   .ticket-code {
-    @apply underline-offset-2 transition-colors hover:underline focus-visible:underline;
+    @apply font-mono text-xs underline-offset-2 transition-colors hover:underline focus-visible:underline;
+    color: hsl(var(--text-secondary));
+  }
+  .ticket-code:hover { color: hsl(var(--brand-primary)); }
+
+  /* Status badge variants */
+  .badge-todo        { color: hsl(var(--status-todo));        background: rgb(var(--chart-06-rgb) / 0.10); border: 1px solid rgb(var(--chart-06-rgb) / 0.20); }
+  .badge-in-progress { color: hsl(var(--status-in-progress)); background: rgb(var(--chart-01-rgb) / 0.10); border: 1px solid rgb(var(--chart-01-rgb) / 0.25); }
+  .badge-in-review   { color: hsl(var(--status-in-review));   background: rgb(var(--chart-05-rgb) / 0.10); border: 1px solid rgb(var(--chart-05-rgb) / 0.25); }
+  .badge-done        { color: hsl(var(--status-done));        background: rgb(var(--chart-04-rgb) / 0.10); border: 1px solid rgb(var(--chart-04-rgb) / 0.25); }
+  .badge-blocked     { color: hsl(var(--status-blocked));     background: rgb(244  63  94 / 0.10);         border: 1px solid rgb(244  63  94 / 0.30); }
+  .badge-cancelled   { color: hsl(var(--text-disabled));      background: transparent;                     border: 1px solid hsl(var(--border-subtle)); }
+
+  /* Priority indicators */
+  .priority-urgent { color: hsl(var(--status-blocked)); }
+  .priority-high   { color: hsl(var(--accent-data)); }
+  .priority-medium { color: hsl(var(--brand-primary)); }
+  .priority-low    { color: hsl(var(--text-secondary)); }
+  .priority-none   { color: hsl(var(--text-disabled)); }
+
+  /* Data / analytics accent */
+  .text-data    { color: hsl(var(--accent-data)); }
+  .bg-data      { background: hsl(var(--accent-data)); }
+  .border-data  { border-color: hsl(var(--accent-data)); }
+
+  /* Surface hierarchy */
+  .bg-canvas    { background: hsl(var(--canvas)); }
+  .bg-surface-1 { background: hsl(var(--surface-01)); }
+  .bg-surface-2 { background: hsl(var(--surface-02)); }
+  .bg-surface-3 { background: hsl(var(--surface-03)); }
+
+  /* Text hierarchy */
+  .text-primary-content   { color: hsl(var(--text-primary)); }
+  .text-secondary-content { color: hsl(var(--text-secondary)); }
+  .text-disabled-content  { color: hsl(var(--text-disabled)); }
+
+  /* Brand */
+  .text-brand   { color: hsl(var(--brand-primary)); }
+  .bg-brand     { background: hsl(var(--brand-primary)); }
+  .border-brand { border-color: hsl(var(--brand-primary)); }
+
+  /* Issue card — selected state (left border accent) */
+  .issue-card-selected {
+    border-left: 3px solid hsl(var(--brand-primary));
+    padding-left: calc(var(--space-3) - 3px);
+  }
+
+  /* Issue card — blocked state */
+  .issue-card-blocked {
+    border-left: 3px solid hsl(var(--status-blocked));
+    background: rgb(244 63 94 / 0.04);
+  }
+
+  /* Aging indicator (>3 days) */
+  .aging-warning { color: hsl(var(--accent-data)); }
+  .aging-urgent  { color: hsl(var(--status-blocked)); }
+
+  /* WIP limit states */
+  .wip-near   { background: rgb(var(--chart-02-rgb) / 0.06); }
+  .wip-over   { background: rgb(244 63 94 / 0.06); border-color: hsl(var(--status-blocked)); }
+
+  /* Drop zone (board DnD) */
+  .drop-zone-active {
+    border: 2px dashed hsl(var(--brand-primary));
+    background: rgb(var(--chart-01-rgb) / 0.06);
+    animation: drop-pulse 1s ease-in-out infinite;
+  }
+
+  /* Chart fill utilities */
+  .chart-fill-01 { fill: rgb(var(--chart-01-rgb) / 0.12); }
+  .chart-fill-02 { fill: rgb(var(--chart-02-rgb) / 0.12); }
+  .chart-fill-03 { fill: rgb(var(--chart-03-rgb) / 0.12); }
+  .chart-fill-04 { fill: rgb(var(--chart-04-rgb) / 0.12); }
+  .chart-fill-05 { fill: rgb(var(--chart-05-rgb) / 0.12); }
+  .chart-fill-06 { fill: rgb(var(--chart-06-rgb) / 0.10); }
+
+  /* Density modes */
+  .density-compact  { --row-py: 4px;  --card-p: 8px;  --font-base: 12px; }
+  .density-default  { --row-py: 8px;  --card-p: 12px; --font-base: 14px; }
+  .density-relaxed  { --row-py: 12px; --card-p: 16px; --font-base: 14px; }
+
+  /* Skeleton loader */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--surface-02)) 25%,
+      hsl(var(--surface-03)) 50%,
+      hsl(var(--surface-02)) 75%
+    );
+    background-size: 400% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  }
+}
+
+/* ── KEYFRAMES ───────────────────────────────────────────────────────────── */
+@keyframes drop-pulse {
+  0%, 100% { background: rgb(var(--chart-01-rgb) / 0.04); }
+  50%       { background: rgb(var(--chart-01-rgb) / 0.10); }
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes fade-scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes toast-slide-in {
+  from { transform: translateX(calc(100% + 16px)); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ── COMPONENT ANIMATIONS ────────────────────────────────────────────────── */
+@layer components {
+
+  /* Detail panel slide-in */
+  .detail-panel-enter {
+    animation: slide-in-right var(--duration-base) var(--ease-out);
+  }
+
+  /* Command palette fade+scale */
+  .command-palette-enter {
+    animation: fade-scale-in var(--duration-micro) var(--ease-out);
+  }
+
+  /* Toast notification */
+  .toast-enter {
+    animation: toast-slide-in var(--duration-base) var(--ease-out);
+  }
+
+  /* Dragging ghost */
+  .card-dragging {
+    opacity: 0.65;
+    transform: rotate(1.5deg) scale(1.02);
+    box-shadow: 0 12px 32px hsl(222 26% 4% / 0.6);
+    cursor: grabbing;
+    pointer-events: none;
+  }
+
+  /* Nav item active */
+  .nav-item-active {
+    color: hsl(var(--brand-primary));
+    background: rgb(var(--chart-01-rgb) / 0.10);
+  }
+
+  /* Metric card */
+  .metric-card {
+    background: hsl(var(--surface-02));
+    border: 1px solid hsl(var(--border-subtle));
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color var(--duration-micro) var(--ease-out);
+  }
+  .metric-card:hover {
+    border-color: hsl(var(--border-strong));
+  }
+
+  /* Sprint health indicator (sidebar) */
+  .sprint-progress-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: hsl(var(--surface-03));
+  }
+  .sprint-progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: hsl(var(--status-done));
+    transition: width var(--duration-base) var(--ease-out);
+  }
+  .sprint-progress-fill.at-risk {
+    background: hsl(var(--accent-data));
+  }
+  .sprint-progress-fill.blocked {
+    background: hsl(var(--status-blocked));
   }
 }

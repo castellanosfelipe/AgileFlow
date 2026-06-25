@@ -17,6 +17,12 @@ export const columns: Array<{ status: IssueStatus; title: string }> = [
   { status: "DONE", title: "Finalizada" }
 ];
 
+const WIP_LIMITS: Record<IssueStatus, number | null> = {
+  TODO: null,
+  IN_PROGRESS: 6,
+  DONE: null
+};
+
 export type GroupMode = "none" | "epic";
 
 const columnStyles: Record<
@@ -74,13 +80,17 @@ export function BoardColumn({
   const groups = groupIssues(issues, groupMode);
   const styles = columnStyles[status];
   const headingId = `board-column-${status.toLowerCase()}`;
+  const wipLimit = WIP_LIMITS[status];
+  const count = issues.length;
+  const wipOver = wipLimit !== null && count >= wipLimit;
+  const wipNear = wipLimit !== null && !wipOver && count >= Math.ceil(wipLimit * 0.8);
 
   return (
     <section
       aria-labelledby={headingId}
       className={`min-h-[520px] rounded-md border p-3 transition-colors ${styles.container} ${
         isOver ? "border-primary bg-accent/60" : ""
-      }`}
+      } ${wipOver ? "border-status-blocked/40" : ""}`}
       ref={setNodeRef}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
@@ -90,9 +100,25 @@ export function BoardColumn({
             {title}
           </h2>
         </div>
-        <Badge className={styles.count} variant="outline">
-          {issues.length}
-        </Badge>
+        <div className="flex shrink-0 items-center gap-1.5">
+          {wipLimit !== null ? (
+            <span
+              className={`text-xs font-mono tabular-nums ${
+                wipOver
+                  ? "font-semibold text-status-blocked"
+                  : wipNear
+                    ? "text-accent-data"
+                    : "text-muted-foreground"
+              }`}
+              title={`WIP limit: ${wipLimit}`}
+            >
+              {count}/{wipLimit}
+            </span>
+          ) : null}
+          <Badge className={styles.count} variant="outline">
+            {count}
+          </Badge>
+        </div>
       </div>
 
       <div className="space-y-3">

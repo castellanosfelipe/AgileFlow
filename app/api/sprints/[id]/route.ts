@@ -1,5 +1,6 @@
 import { SprintStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import { forbiddenResponse, unauthorizedResponse } from "@/lib/api-errors";
 import { auditJson } from "@/lib/audit";
@@ -181,6 +182,13 @@ export async function PATCH(request: Request, context: RouteContext) {
             : 400;
 
       return new NextResponse(error.message, { status });
+    }
+
+    if (error instanceof ZodError) {
+      return new NextResponse(
+        error.issues[0]?.message ?? "Los datos del sprint no son válidos",
+        { status: 400 }
+      );
     }
 
     return new NextResponse("No se pudo actualizar el sprint", { status: 400 });

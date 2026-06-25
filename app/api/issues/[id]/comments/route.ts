@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import { forbiddenResponse, unauthorizedResponse } from "@/lib/api-errors";
 import { auditJson } from "@/lib/audit";
@@ -92,6 +93,12 @@ export async function POST(request: Request, context: RouteContext) {
 
     return NextResponse.json(comment, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return new NextResponse(
+        error.issues[0]?.message ?? "El comentario no es válido",
+        { status: 400 }
+      );
+    }
     return new NextResponse("No se pudo agregar el comentario", { status: 400 });
   }
 }

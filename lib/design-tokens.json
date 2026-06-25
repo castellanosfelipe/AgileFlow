@@ -1,0 +1,118 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "product": "AgileFlow",
+    "version": "1.0.0",
+    "principle": "Blue = doing. Amber = knowing.",
+    "defaultMode": "dark"
+  },
+  "color": {
+    "dark": {
+      "canvas":         { "$value": "#0D1117", "$type": "color", "$description": "App base background — deep graphite-blue" },
+      "surface01":      { "$value": "#161C28", "$type": "color", "$description": "Sidebars, panels" },
+      "surface02":      { "$value": "#1C2336", "$type": "color", "$description": "Cards, modals, dropdowns" },
+      "surface03":      { "$value": "#232C42", "$type": "color", "$description": "Hover states, active rows" },
+      "borderSubtle":   { "$value": "#1E2A3E", "$type": "color", "$description": "Near-invisible internal dividers" },
+      "borderStrong":   { "$value": "#2D3D57", "$type": "color", "$description": "Interactive component borders" },
+      "textPrimary":    { "$value": "#E4E8F5", "$type": "color", "$description": "Main content — cool white, not pure" },
+      "textSecondary":  { "$value": "#7B8BAF", "$type": "color", "$description": "Metadata, labels, timestamps" },
+      "textDisabled":   { "$value": "#3D4A64", "$type": "color", "$description": "Inactive elements" },
+      "textInverse":    { "$value": "#0D1117", "$type": "color", "$description": "On light or colored backgrounds" },
+      "brandPrimary":   { "$value": "#3D7EFF", "$type": "color", "$description": "Electric cobalt — CTAs, active nav, selections" },
+      "brandSecondary": { "$value": "#6898FF", "$type": "color", "$description": "Hover states, secondary brand" },
+      "accentData":     { "$value": "#F5A623", "$type": "color", "$description": "Analytics layer ONLY — charts, metrics, trends" },
+      "statusTodo":        { "$value": "#64748B", "$type": "color" },
+      "statusInProgress":  { "$value": "#3D7EFF", "$type": "color" },
+      "statusInReview":    { "$value": "#A78BFA", "$type": "color" },
+      "statusDone":        { "$value": "#22C55E", "$type": "color" },
+      "statusBlocked":     { "$value": "#F43F5E", "$type": "color" },
+      "statusCancelled":   { "$value": "#111827", "$type": "color" },
+      "chart01":        { "$value": "#3D7EFF", "$type": "color", "$description": "Cobalt blue — primary series, velocity" },
+      "chart02":        { "$value": "#F5A623", "$type": "color", "$description": "Amber — comparison, target vs actual" },
+      "chart03":        { "$value": "#EC4899", "$type": "color", "$description": "Pink/magenta — third dataset" },
+      "chart04":        { "$value": "#14B8A6", "$type": "color", "$description": "Teal — throughput, fourth dataset" },
+      "chart05":        { "$value": "#A78BFA", "$type": "color", "$description": "Soft violet — fifth dataset" },
+      "chart06":        { "$value": "#94A3B8", "$type": "color", "$description": "Steel gray — reference, benchmark" },
+      "chart01Muted":   { "$value": "rgba(61, 126, 255, 0.12)",  "$type": "color" },
+      "chart02Muted":   { "$value": "rgba(245, 166, 35, 0.12)",  "$type": "color" },
+      "chart03Muted":   { "$value": "rgba(236, 72, 153, 0.12)",  "$type": "color" },
+      "chart04Muted":   { "$value": "rgba(20, 184, 166, 0.12)",  "$type": "color" },
+      "chart05Muted":   { "$value": "rgba(167, 139, 250, 0.12)", "$type": "color" },
+      "chart06Muted":   { "$value": "rgba(148, 163, 184, 0.10)", "$type": "color" }
+    },
+    "light": {
+      "canvas":         { "$value": "#F5F7FA", "$type": "color" },
+      "surface01":      { "$value": "#FFFFFF", "$type": "color" },
+      "surface02":      { "$value": "#EDF0F7", "$type": "color" },
+      "surface03":      { "$value": "#E2E7F2", "$type": "color" },
+      "borderSubtle":   { "$value": "#DDE2EF", "$type": "color" },
+      "borderStrong":   { "$value": "#C4CEDF", "$type": "color" },
+      "textPrimary":    { "$value": "#111827", "$type": "color" },
+      "textSecondary":  { "$value": "#5B6A8E", "$type": "color" },
+      "textDisabled":   { "$value": "#9CA3B5", "$type": "color" },
+      "textInverse":    { "$value": "#FFFFFF", "$type": "color" },
+      "brandPrimary":   { "$value": "#2563EB", "$type": "color" },
+      "brandSecondary": { "$value": "#1D4ED8", "$type": "color" },
+      "accentData":     { "$value": "#D97706", "$type": "color" },
+      "statusTodo":       { "$value": "#94A3B8", "$type": "color" },
+      "statusInProgress": { "$value": "#2563EB", "$type": "color" },
+      "statusInReview":   { "$value": "#7C3AED", "$type": "color" },
+      "statusDone":       { "$value": "#16A34A", "$type": "color" },
+      "statusBlocked":    { "$value": "#DC2626", "$type": "color" },
+      "statusCancelled":  { "$value": "#CBD5E1", "$type": "color" }
+    }
+  },
+  "typography": {
+    "fontDisplay": {
+      "$value": "'Mona Sans Variable', system-ui, sans-serif",
+      "$type": "fontFamily",
+      "$description": "GitHub's humanist variable font — technical authority, 200-900 weight range"
+    },
+    "fontBody": {
+      "$value": "'Geist', 'DM Sans', system-ui, sans-serif",
+      "$type": "fontFamily",
+      "$description": "Screen-optimized, excellent at 12-14px in dark mode, disappears behind content"
+    },
+    "fontMono": {
+      "$value": "'JetBrains Mono', 'Geist Mono', monospace",
+      "$type": "fontFamily",
+      "$description": "Tabular numerals (tnum), distinct letterforms for IDs and data. Developer-community standard."
+    },
+    "scale": {
+      "2xs":  { "$value": { "fontSize": "10px", "lineHeight": "1.4", "fontWeight": "400" }, "$type": "typography", "$description": "Timestamps, badge counters" },
+      "xs":   { "$value": { "fontSize": "11px", "lineHeight": "1.4", "fontWeight": "400" }, "$type": "typography", "$description": "Column labels, metadata" },
+      "sm":   { "$value": { "fontSize": "12px", "lineHeight": "1.5", "fontWeight": "400" }, "$type": "typography", "$description": "Body dense in lists, sidebar nav" },
+      "base": { "$value": { "fontSize": "14px", "lineHeight": "1.5", "fontWeight": "400" }, "$type": "typography", "$description": "Standard body, comments" },
+      "md":   { "$value": { "fontSize": "16px", "lineHeight": "1.5", "fontWeight": "500" }, "$type": "typography", "$description": "Ticket titles, user names" },
+      "lg":   { "$value": { "fontSize": "18px", "lineHeight": "1.4", "fontWeight": "600" }, "$type": "typography", "$description": "Panel headers, section titles" },
+      "xl":   { "$value": { "fontSize": "24px", "lineHeight": "1.3", "fontWeight": "600" }, "$type": "typography", "$description": "Project names, epics" },
+      "2xl":  { "$value": { "fontSize": "32px", "lineHeight": "1.2", "fontWeight": "700" }, "$type": "typography", "$description": "Hero metrics in analytics dashboard" },
+      "3xl":  { "$value": { "fontSize": "48px", "lineHeight": "1.1", "fontWeight": "800" }, "$type": "typography", "$description": "KPI numbers in executive view" }
+    }
+  },
+  "spacing": {
+    "1":  { "$value": "4px",  "$type": "dimension" },
+    "2":  { "$value": "8px",  "$type": "dimension" },
+    "3":  { "$value": "12px", "$type": "dimension" },
+    "4":  { "$value": "16px", "$type": "dimension" },
+    "5":  { "$value": "24px", "$type": "dimension" },
+    "6":  { "$value": "32px", "$type": "dimension" },
+    "7":  { "$value": "48px", "$type": "dimension" },
+    "8":  { "$value": "64px", "$type": "dimension" }
+  },
+  "layout": {
+    "sidebarExpanded":  { "$value": "240px", "$type": "dimension" },
+    "sidebarCollapsed": { "$value": "56px",  "$type": "dimension" },
+    "topbarHeight":     { "$value": "48px",  "$type": "dimension" },
+    "detailPanelWidth": { "$value": "380px", "$type": "dimension" }
+  },
+  "motion": {
+    "durationMicro": { "$value": "150ms", "$type": "duration" },
+    "durationBase":  { "$value": "250ms", "$type": "duration" },
+    "durationLong":  { "$value": "350ms", "$type": "duration" },
+    "durationDraw":  { "$value": "400ms", "$type": "duration" },
+    "easeOut":  { "$value": "cubic-bezier(0.0, 0.0, 0.2, 1)", "$type": "cubicBezier" },
+    "easeIn":   { "$value": "cubic-bezier(0.4, 0.0, 1.0, 1)", "$type": "cubicBezier" },
+    "easeBoth": { "$value": "cubic-bezier(0.4, 0.0, 0.2, 1)", "$type": "cubicBezier" }
+  }
+}

@@ -1,5 +1,6 @@
 import { Prisma, SprintStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import { forbiddenResponse, unauthorizedResponse } from "@/lib/api-errors";
 import { auditJson, serializeAuditValue } from "@/lib/audit";
@@ -621,6 +622,12 @@ export async function PATCH(request: Request, context: RouteContext) {
     return NextResponse.json(issue);
   } catch (error) {
     console.error("Issue update failed", error);
+    if (error instanceof ZodError) {
+      return new NextResponse(
+        error.issues[0]?.message ?? "Los datos de la tarea no son válidos",
+        { status: 400 }
+      );
+    }
     return new NextResponse("No se pudo actualizar la tarea", { status: 400 });
   }
 }

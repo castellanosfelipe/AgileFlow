@@ -27,6 +27,8 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogPanel,
+  DialogPanelContent,
   DialogTitle
 } from "@/components/ui/dialog";
 import {
@@ -71,6 +73,7 @@ type IssueDetailDialogProps = {
   onClose: () => void;
   onChanged?: () => void;
   onOpenIssue?: (issueId: string) => void;
+  variant?: "modal" | "panel";
 };
 
 type IssueSaveValues = {
@@ -434,13 +437,15 @@ export function IssueDetailDialog({
   sprints,
   onClose,
   onChanged,
-  onOpenIssue
+  onOpenIssue,
+  variant = "panel"
 }: IssueDetailDialogProps) {
   const queryClient = useQueryClient();
   const statusSelectRef = React.useRef<HTMLSelectElement | null>(null);
   const statusBlurTimerRef = React.useRef<number | null>(null);
   const lastAutoSaveKeyRef = React.useRef<Partial<Record<IssueSaveField, string>>>({});
   const loadedIssueIdRef = React.useRef<string | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [status, setStatus] = React.useState<IssueStatus>("TODO");
@@ -1284,9 +1289,16 @@ export function IssueDetailDialog({
     createSubtask.mutate();
   }
 
+  const isPanel = variant === "panel";
+  const Wrapper = isPanel ? DialogPanel : Dialog;
+  const Content = isPanel ? DialogPanelContent : DialogContent;
+  const contentClassName = isPanel
+    ? "p-5"
+    : "max-h-[90vh] max-w-5xl overflow-y-auto";
+
   return (
-    <Dialog open={Boolean(issueId)} onOpenChange={(open) => !open && closeDialog()}>
-      <DialogContent className="max-h-[90vh] max-w-5xl overflow-y-auto">
+    <Wrapper open={Boolean(issueId)} onOpenChange={(open) => !open && closeDialog()}>
+      <Content className={contentClassName}>
         <DialogClose onClose={closeDialog} />
         <DialogHeader>
           <div className="flex items-start justify-between gap-3 pr-10">
@@ -1447,8 +1459,35 @@ export function IssueDetailDialog({
                       <p className="text-xs">
                         Imágenes, PDF, documentos y otros archivos de soporte.
                       </p>
+                      {canEditIssue ? (
+                        <Button
+                          disabled={uploadAttachments.isPending}
+                          onClick={() => fileInputRef.current?.click()}
+                          size="sm"
+                          type="button"
+                          variant="outline"
+                        >
+                          Seleccionar archivos
+                        </Button>
+                      ) : null}
                     </div>
                   </div>
+                  <input
+                    accept="*/*"
+                    aria-hidden="true"
+                    className="sr-only"
+                    multiple
+                    onChange={(event) => {
+                      const files = Array.from(event.target.files ?? []);
+                      if (files.length) {
+                        uploadAttachmentFiles(files);
+                        event.target.value = "";
+                      }
+                    }}
+                    ref={fileInputRef}
+                    tabIndex={-1}
+                    type="file"
+                  />
 
                   <div aria-live="polite" className="sr-only" role="status">
                     {uploadAttachments.isPending
@@ -2468,7 +2507,7 @@ export function IssueDetailDialog({
             </aside>
           </div>
         ) : null}
-      </DialogContent>
-    </Dialog>
+      </Content>
+    </Wrapper>
   );
 }

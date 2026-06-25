@@ -36,20 +36,14 @@ function getFocusableElements(container: HTMLElement) {
     });
 }
 
-export function Dialog({
-  open,
-  onOpenChange,
-  children
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  children: React.ReactNode;
-}) {
+function useDialogFocusTrap(
+  open: boolean,
+  onOpenChange: (open: boolean) => void,
+  trapTab: boolean
+) {
   const contentRef = React.useRef<HTMLDivElement | null>(null);
   const previousActiveElementRef = React.useRef<HTMLElement | null>(null);
   const onOpenChangeRef = React.useRef(onOpenChange);
-  const titleId = React.useId();
-  const descriptionId = React.useId();
 
   React.useEffect(() => {
     onOpenChangeRef.current = onOpenChange;
@@ -73,7 +67,7 @@ export function Dialog({
         return;
       }
 
-      if (event.key !== "Tab") return;
+      if (!trapTab || event.key !== "Tab") return;
 
       const content = contentRef.current;
       if (!content) return;
@@ -108,7 +102,23 @@ export function Dialog({
       document.removeEventListener("keydown", onKeyDown);
       previousActiveElementRef.current?.focus?.();
     };
-  }, [open]);
+  }, [open, trapTab]);
+
+  return contentRef;
+}
+
+export function Dialog({
+  open,
+  onOpenChange,
+  children
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: React.ReactNode;
+}) {
+  const contentRef = useDialogFocusTrap(open, onOpenChange, true);
+  const titleId = React.useId();
+  const descriptionId = React.useId();
 
   if (!open) return null;
 
@@ -129,6 +139,30 @@ export function Dialog({
   );
 }
 
+export function DialogPanel({
+  open,
+  onOpenChange,
+  children
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  children: React.ReactNode;
+}) {
+  const contentRef = useDialogFocusTrap(open, onOpenChange, false);
+  const titleId = React.useId();
+  const descriptionId = React.useId();
+
+  if (!open) return null;
+
+  return (
+    <DialogContext.Provider
+      value={{ contentRef, descriptionId, onOpenChange, titleId }}
+    >
+      {children}
+    </DialogContext.Provider>
+  );
+}
+
 export function DialogContent({
   className,
   children
@@ -142,6 +176,7 @@ export function DialogContent({
     <div
       aria-describedby={context?.descriptionId}
       aria-labelledby={context?.titleId}
+      aria-modal="true"
       className={cn(
         "relative z-10 w-full max-w-lg rounded-lg border bg-background p-5 shadow-lg",
         className
@@ -151,7 +186,34 @@ export function DialogContent({
       }}
       role="dialog"
       tabIndex={-1}
-      aria-modal="true"
+    >
+      {children}
+    </div>
+  );
+}
+
+export function DialogPanelContent({
+  className,
+  children
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const context = React.useContext(DialogContext);
+
+  return (
+    <div
+      aria-describedby={context?.descriptionId}
+      aria-labelledby={context?.titleId}
+      className={cn(
+        "fixed inset-y-0 right-0 z-40 flex w-[min(900px,95vw)] flex-col overflow-y-auto border-l border-border-subtle bg-surface-01 shadow-elevated animate-slide-in-right",
+        className
+      )}
+      ref={(node) => {
+        if (context) context.contentRef.current = node;
+      }}
+      role="dialog"
+      tabIndex={-1}
     >
       {children}
     </div>

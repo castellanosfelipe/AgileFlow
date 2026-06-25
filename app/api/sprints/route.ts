@@ -1,5 +1,6 @@
 import { SprintStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import {
   databaseUnavailableResponse,
@@ -89,6 +90,13 @@ export async function POST(request: Request) {
   } catch (error) {
     if (isDatabaseUnavailable(error)) {
       return databaseUnavailableResponse();
+    }
+
+    if (error instanceof ZodError) {
+      return new NextResponse(
+        error.issues[0]?.message ?? "Los datos del sprint no son válidos",
+        { status: 400 }
+      );
     }
 
     return new NextResponse("No se pudo crear el sprint", { status: 400 });
