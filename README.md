@@ -13,7 +13,10 @@ Contraseña: password123
 ![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
 
-![Pantalla de acceso a AgileFlow con autenticación de Directorio Activo en modo oscuro](docs/screenshots/login.png)
+**Demo en vivo → [agileflow-indol.vercel.app](https://agileflow-indol.vercel.app)**
+> Usuario: `ana.gomez@example.com` · Contraseña: `password123`
+
+![Pantalla de acceso a AgileFlow en modo oscuro](docs/screenshots/login.png)
 
 ---
 
@@ -138,7 +141,7 @@ Incluye:
 1. Abre el **Tablero Kanban**
 2. Arrastra la tarjeta de "Por hacer" a "En curso"
 3. Haz clic en la tarjeta para abrir el panel de detalle
-4. En la pestaña "Tiempo", registra las horas trabajadas y una descripción
+4. En la sección de tiempo, registra las horas trabajadas y una descripción
 5. Cierra el panel — el tablero sigue en pantalla sin interrupciones
 
 > El sistema actualiza el tiempo restante en tiempo real y lo refleja en el tablero ejecutivo.
@@ -165,14 +168,14 @@ Incluye:
 ### Requisitos
 
 - Node.js 20 o superior
-- PostgreSQL 15 o superior (puerto 5433 por defecto en la configuración incluida)
+- PostgreSQL 15 o superior
 - (Opcional) Servidor LDAP / Active Directory para autenticación corporativa
 
 ### Instalación
 
 ```bash
 # 1. Clona el repositorio y entra al directorio
-git clone <url-del-repo> agileflow && cd agileflow
+git clone https://github.com/castellanosfelipe/AgileFlow.git agileflow && cd agileflow
 
 # 2. Instala dependencias
 npm install
@@ -221,6 +224,22 @@ Los usuarios del directorio pueden iniciar sesión de inmediato. Si LDAP no est�
 
 ---
 
+## Despliegue rápido (Vercel + Neon)
+
+La forma más rápida de publicar AgileFlow sin costo:
+
+```bash
+# 1. Crea una base de datos gratuita en neon.tech y copia la DATABASE_URL
+# 2. Aplica migraciones y carga datos iniciales
+DATABASE_URL="<tu-url-neon>" npx prisma migrate deploy
+DATABASE_URL="<tu-url-neon>" npx prisma db seed
+
+# 3. Instala Vercel CLI y despliega
+npm i -g vercel && vercel --prod
+```
+
+---
+
 ## Métricas de éxito
 
 Sabes que AgileFlow está funcionando bien para tu equipo cuando:
@@ -247,33 +266,6 @@ Sabes que AgileFlow está funcionando bien para tu equipo cuando:
 
 ---
 
-## Capturas de pantalla para contribuidores
-
-Con la base de datos corriendo y el seed ejecutado, captura las vistas con Playwright CLI:
-
-```bash
-npm run dev &
-
-npx playwright screenshot --browser chromium --viewport-size="1280,800" \
-  "http://localhost:3000/backlog"    docs/screenshots/backlog-sprint-planning.png
-
-npx playwright screenshot --browser chromium --viewport-size="1280,800" \
-  "http://localhost:3000/board"      docs/screenshots/kanban-board-con-detalle.png
-
-npx playwright screenshot --browser chromium --viewport-size="1280,800" \
-  "http://localhost:3000/gantt"      docs/screenshots/gantt-responsable-semana.png
-
-npx playwright screenshot --browser chromium --viewport-size="1280,800" \
-  "http://localhost:3000/pert"       docs/screenshots/pert-dependencias.png
-
-npx playwright screenshot --browser chromium --viewport-size="1280,800" \
-  "http://localhost:3000/executive"  docs/screenshots/ejecutivo-resource-load.png
-```
-
-> Las rutas requieren sesión activa. Autentícate en el navegador con las credenciales del seed antes de ejecutar los comandos.
-
----
-
 ## Stack técnico
 
 | Capa | Tecnología |
@@ -285,6 +277,18 @@ npx playwright screenshot --browser chromium --viewport-size="1280,800" \
 | Autenticación | NextAuth v4 (local + LDAP) |
 | Validación | Zod |
 | Tipado | TypeScript estricto, 0 errores |
+
+---
+
+## Regenerar capturas de pantalla
+
+Con el servidor corriendo y el seed ejecutado:
+
+```bash
+node scripts/capture-docs.mjs
+```
+
+Genera automáticamente los 6 screenshots y los 3 GIFs en `docs/`.
 
 ---
 
