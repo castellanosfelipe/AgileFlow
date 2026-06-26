@@ -213,7 +213,7 @@ export function AppShell({
 
             {isAdmin && isUserMenuOpen ? (
               <div
-                className="absolute bottom-full left-0 right-0 z-[100] mb-1 overflow-hidden rounded-md border border-border-strong bg-surface-02 py-1 text-sm shadow-elevated"
+                className="absolute bottom-full left-0 z-[100] mb-1 min-w-[200px] overflow-hidden rounded-md border border-border-strong bg-surface-02 py-1 text-sm shadow-elevated"
                 role="menu"
               >
                 <button
