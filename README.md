@@ -1,11 +1,5 @@
 # AgileFlow
 
-
-##Credenciales de demo:
-
-Usuario:    ana.gomez@example.com
-Contraseña: password123
-
 **Gestión ágil sin fricción para equipos de ingeniería que no tienen tiempo para aprender Jira.**
 
 ![Estado](https://img.shields.io/badge/estado-beta-yellow)
