@@ -45,6 +45,7 @@ Desde aquí gestionas el trabajo pendiente en su totalidad. Puedes crear tareas 
 El tablero muestra exclusivamente las tareas del sprint en curso, organizadas en tres columnas: Por hacer, En curso y Finalizada. Arrastra las tarjetas para cambiar su estado; el sistema lo guarda de inmediato.
 
 - Drag & drop nativo (funciona en touch y desktop)
+- **Accesible por teclado**: foco en el grip de la tarjeta → `Space` para agarrar → flechas para mover entre columnas → `Space` para soltar
 - Límite WIP en "En curso" (6 tareas): el contador cambia a ámbar al acercarse y a rojo al superarse
 - Agrupación opcional por épica
 - Creación rápida de tarea directamente en la columna
@@ -81,6 +82,15 @@ La vista de Gantt muestra todas las tareas del proyecto con sus fechas de inicio
 - Exporta los datos como CSV para compartir con stakeholders externos
 
 ![Vista Gantt con barras horizontales por responsable y zoom semanal activo](docs/screenshots/gantt-responsable-semana.png)
+
+---
+
+### Tema claro/oscuro e idioma
+
+Cambia entre modo oscuro y claro, o entre español e inglés, desde cualquier pantalla — el control está en la esquina superior derecha de la barra de navegación y también en la pantalla de acceso.
+
+- La preferencia se guarda en una cookie y se aplica desde el servidor (sin parpadeo al cargar)
+- Español o inglés: toda la interfaz, incluyendo menús, etiquetas de estado y mensajes de error
 
 ---
 
@@ -126,7 +136,13 @@ Incluye:
 
 > Al final del sprint, "Completar sprint" migra las tareas sin terminar al siguiente sprint planificado o al backlog.
 
+[![Vista previa: Flujo completo de creación de sprint, asignación de tareas y activación](docs/videos/flujo-crear-sprint-palette.png)](docs/videos/flujo-crear-sprint.mp4)
+
+<details><summary>Ver animación GIF</summary>
+
 ![GIF: Flujo completo de creación de sprint, asignación de tareas y activación](docs/videos/flujo-crear-sprint.gif)
+
+</details>
 
 ---
 
@@ -140,7 +156,13 @@ Incluye:
 
 > El sistema actualiza el tiempo restante en tiempo real y lo refleja en el tablero ejecutivo.
 
+[![Vista previa: Mover una tarea al tablero y registrar tiempo desde el panel lateral](docs/videos/flujo-registrar-avance-palette.png)](docs/videos/flujo-registrar-avance.mp4)
+
+<details><summary>Ver animación GIF</summary>
+
 ![GIF: Mover una tarea al tablero y registrar tiempo desde el panel lateral](docs/videos/flujo-registrar-avance.gif)
+
+</details>
 
 ---
 
@@ -153,7 +175,13 @@ Incluye:
 
 > Filtra por sprint o épica para aislar el análisis a un área específica del proyecto.
 
+[![Vista previa: Navegar al ejecutivo, revisar el heatmap de carga y exportar los datos](docs/videos/flujo-revisar-carga-palette.png)](docs/videos/flujo-revisar-carga.mp4)
+
+<details><summary>Ver animación GIF</summary>
+
 ![GIF: Navegar al ejecutivo, revisar el heatmap de carga y exportar los datos](docs/videos/flujo-revisar-carga.gif)
+
+</details>
 
 ---
 
@@ -252,11 +280,13 @@ Sabes que AgileFlow está funcionando bien para tu equipo cuando:
 
 | Now | Next | Later |
 |---|---|---|
-| Tablero Kanban con DnD | Sensor de teclado para DnD (accesibilidad) | Notificaciones push |
-| Panel de detalle slide-in | Rate limiting en login | Múltiples proyectos |
-| Daily Resource Load Index | Columna `authProvider` en modelo de usuarios | Integración GitHub / GitLab |
+| Tablero Kanban con DnD (mouse y teclado) | Columna `authProvider` en modelo de usuarios | Notificaciones push |
+| Panel de detalle slide-in | — | Múltiples proyectos |
+| Daily Resource Load Index | — | Integración GitHub / GitLab |
 | Migración desde Jira (CSV / API) | — | API pública REST |
 | Backups automáticos configurables | — | Vista mobile responsive |
+| Rate limiting en login | — | — |
+| Tema claro/oscuro + idioma ES/EN | — | — |
 
 ---
 
@@ -266,11 +296,12 @@ Sabes que AgileFlow está funcionando bien para tu equipo cuando:
 |---|---|
 | Frontend | Next.js 15 (App Router), React 19, Tailwind CSS |
 | Estado del servidor | TanStack Query v5 |
-| Drag & Drop | dnd-kit |
+| Drag & Drop | dnd-kit (mouse + teclado) |
 | Base de datos | PostgreSQL + Prisma 6 |
-| Autenticación | NextAuth v4 (local + LDAP) |
+| Autenticación | NextAuth v4 (local + LDAP) · rate limiting en memoria |
 | Validación | Zod |
 | Tipado | TypeScript estricto, 0 errores |
+| i18n / tema | Cookies SSR sin parpadeo (ES/EN, oscuro/claro) |
 
 ---
 
