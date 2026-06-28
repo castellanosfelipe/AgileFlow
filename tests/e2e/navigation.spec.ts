@@ -5,9 +5,10 @@ async function login(page: Page, callbackUrl: string) {
   const password = process.env.E2E_PASSWORD ?? "password123";
 
   await page.goto(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`);
-  await page.getByLabel("Usuario").fill(username);
-  await page.getByLabel(/Contraseña|Contrase/).fill(password);
-  await page.getByRole("button", { name: "Entrar" }).click();
+  // Use stable id/type selectors so the helper is independent of the UI language.
+  await page.locator("#username").fill(username);
+  await page.locator("#password").fill(password);
+  await page.locator('button[type="submit"]').click();
   await page.waitForURL(`**${callbackUrl}`);
 }
 

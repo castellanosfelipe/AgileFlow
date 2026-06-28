@@ -14,9 +14,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/lib/i18n/language-provider";
 
 export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
   const router = useRouter();
+  const { t } = useLanguage();
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);
@@ -35,7 +37,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
       });
 
       if (!result || result.error) {
-        setError("Usuario o contraseña de Directorio Activo no válidos");
+        setError(t("login.invalidCredentials"));
         return;
       }
 
@@ -47,24 +49,24 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
   return (
     <Card className="w-full max-w-sm shadow-none">
       <CardHeader>
-        <CardTitle>Ingresar</CardTitle>
+        <CardTitle>{t("login.cardTitle")}</CardTitle>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={onSubmit}>
           <div className="space-y-2">
-            <Label htmlFor="username">Usuario</Label>
+            <Label htmlFor="username">{t("login.username")}</Label>
             <Input
               autoComplete="username"
               autoFocus
               id="username"
-              placeholder="usuario o correo"
+              placeholder={t("login.usernamePlaceholder")}
               value={username}
               onChange={(event) => setUsername(event.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Contraseña</Label>
+            <Label htmlFor="password">{t("login.password")}</Label>
             <Input
               autoComplete="current-password"
               id="password"
@@ -89,7 +91,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
             type="submit"
           >
             {isPending ? <Loader2 className="animate-spin" /> : <LogIn />}
-            Entrar
+            {t("login.submit")}
           </Button>
         </form>
       </CardContent>

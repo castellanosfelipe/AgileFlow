@@ -1,7 +1,14 @@
 "use client";
 
 import { useDraggable, useDroppable } from "@dnd-kit/core";
-import { CalendarDays, Loader2, Plus, Timer, UserRound } from "lucide-react";
+import {
+  CalendarDays,
+  GripVertical,
+  Loader2,
+  Plus,
+  Timer,
+  UserRound
+} from "lucide-react";
 import * as React from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -197,6 +204,7 @@ function IssueCard({
     attributes,
     listeners,
     setNodeRef: setDraggableNodeRef,
+    setActivatorNodeRef,
     transform,
     isDragging
   } = useDraggable({
@@ -225,8 +233,8 @@ function IssueCard({
 
   return (
     <div
-      className={`touch-none cursor-pointer rounded-md border border-l-4 bg-background p-3 text-left text-sm shadow-sm transition hover:border-primary/40 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${columnStyles[issue.status].cardAccent} ${
-        isDragging ? "relative z-20 opacity-80" : ""
+      className={`relative touch-none cursor-pointer rounded-md border border-l-4 bg-background p-3 text-left text-sm shadow-sm transition hover:border-primary/40 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${columnStyles[issue.status].cardAccent} ${
+        isDragging ? "z-20 opacity-80" : ""
       }`}
       onClick={onOpen}
       ref={setNodeRef}
@@ -234,14 +242,12 @@ function IssueCard({
     >
       <button
         aria-label={`Abrir tarea ${issue.code}: ${issue.title}`}
-        className="block w-full rounded-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="block w-full rounded-sm pr-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         onClick={(event) => {
           event.stopPropagation();
           onOpen();
         }}
         type="button"
-        {...attributes}
-        {...listeners}
       >
         <div className="mb-3 min-w-0">
           <p className="ticket-code font-mono text-xs font-semibold text-primary">
@@ -278,6 +284,18 @@ function IssueCard({
             </span>
           ) : null}
         </div>
+      </button>
+
+      <button
+        aria-label={`Mover tarea ${issue.code}. Presiona Espacio para tomarla y usa las flechas para cambiarla de columna.`}
+        className="absolute right-1.5 top-2 cursor-grab touch-none rounded-sm p-1 text-muted-foreground/60 transition hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"
+        onClick={(event) => event.stopPropagation()}
+        ref={setActivatorNodeRef}
+        type="button"
+        {...attributes}
+        {...listeners}
+      >
+        <GripVertical className="size-4" />
       </button>
     </div>
   );

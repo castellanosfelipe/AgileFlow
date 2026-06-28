@@ -2,6 +2,7 @@
 
 import {
   DndContext,
+  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
@@ -35,6 +36,7 @@ import {
   columns,
   type GroupMode
 } from "@/features/board/board-components";
+import { boardCoordinateGetter } from "@/features/board/keyboard-coordinates";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { apiFetch } from "@/lib/api-client";
@@ -140,7 +142,9 @@ function calculatePosition({
   }
 
   if (before) return before.position + 1000;
-  if (after) return after.position - 1000;
+  // Dropping above the first card: place it between 0 and that card. Subtracting
+  // a fixed gap could go negative (the server rejects position < 0), so halve.
+  if (after) return Math.max(0, Math.floor(after.position / 2));
   return 1000;
 }
 
@@ -176,6 +180,9 @@ export function BoardView() {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 6 }
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: boardCoordinateGetter
     })
   );
   const [search, setSearch] = React.useState("");

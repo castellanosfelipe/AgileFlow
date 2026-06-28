@@ -31,11 +31,6 @@ const estimateMinutesSchema = z.coerce
   .optional()
   .nullable();
 
-export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8)
-});
-
 export const sprintCreateSchema = z
   .object({
     name: z.string().trim().min(1, "El nombre es obligatorio").max(80),

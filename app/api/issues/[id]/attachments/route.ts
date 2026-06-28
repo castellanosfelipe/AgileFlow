@@ -21,21 +21,43 @@ type RouteContext = {
 
 const maxFileSize = 15 * 1024 * 1024;
 const maxFilesPerUpload = 8;
-const blockedExtensions = new Set([
-  ".bat",
-  ".cmd",
-  ".com",
-  ".exe",
-  ".html",
-  ".htm",
-  ".js",
-  ".mjs",
-  ".msi",
-  ".ps1",
-  ".scr",
-  ".sh",
-  ".svg",
-  ".vbs"
+// Allowlist: only known-safe attachment types are accepted. Anything else
+// (including executables and inline-renderable .svg/.html/.js) is rejected.
+const allowedExtensions = new Set([
+  // Images
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".webp",
+  ".bmp",
+  ".heic",
+  ".heif",
+  // Documents
+  ".pdf",
+  ".doc",
+  ".docx",
+  ".xls",
+  ".xlsx",
+  ".ppt",
+  ".pptx",
+  ".odt",
+  ".ods",
+  ".odp",
+  ".rtf",
+  ".txt",
+  ".md",
+  ".csv",
+  ".log",
+  // Data
+  ".json",
+  ".xml",
+  // Archives
+  ".zip",
+  ".rar",
+  ".7z",
+  ".tar",
+  ".gz"
 ]);
 
 const userSelect = {
@@ -116,10 +138,11 @@ export async function POST(request: Request, context: RouteContext) {
         });
       }
 
-      if (blockedExtensions.has(extension)) {
-        return new NextResponse("Ese tipo de archivo no está permitido", {
-          status: 400
-        });
+      if (!allowedExtensions.has(extension)) {
+        return new NextResponse(
+          "Ese tipo de archivo no está permitido. Usa imágenes, documentos, hojas de cálculo, archivos comprimidos o texto.",
+          { status: 400 }
+        );
       }
     }
 

@@ -24,8 +24,11 @@ import * as React from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
+import { SettingsToggle } from "@/components/settings-toggle";
 import { apiFetch } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/language-provider";
+import type { TranslationKey } from "@/lib/i18n/translations";
 import type { ActiveSprintHealthDTO } from "@/app/api/sprints/active/route";
 
 const DirectoryConnectionDialog = dynamic(
@@ -57,12 +60,16 @@ const BackupManagementDialog = dynamic(
   { ssr: false }
 );
 
-const navItems = [
-  { href: "/backlog", label: "Backlog", icon: ListTodo },
-  { href: "/board", label: "Kanban", icon: KanbanSquare },
-  { href: "/gantt", label: "Gantt", icon: GitBranch },
-  { href: "/pert", label: "PERT", icon: Network },
-  { href: "/executive", label: "Ejecutivo", icon: BarChart3 }
+const navItems: {
+  href: string;
+  labelKey: TranslationKey;
+  icon: typeof ListTodo;
+}[] = [
+  { href: "/backlog", labelKey: "nav.backlog", icon: ListTodo },
+  { href: "/board", labelKey: "nav.board", icon: KanbanSquare },
+  { href: "/gantt", labelKey: "nav.gantt", icon: GitBranch },
+  { href: "/pert", labelKey: "nav.pert", icon: Network },
+  { href: "/executive", labelKey: "nav.executive", icon: BarChart3 }
 ];
 
 type AppShellUser = {
@@ -79,6 +86,7 @@ export function AppShell({
   user: AppShellUser;
 }) {
   const pathname = usePathname();
+  const { t } = useLanguage();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false);
   const [isDirectoryDialogOpen, setIsDirectoryDialogOpen] = React.useState(false);
@@ -86,7 +94,7 @@ export function AppShell({
   const [isJiraMigrationDialogOpen, setIsJiraMigrationDialogOpen] = React.useState(false);
   const [isBackupManagementDialogOpen, setIsBackupManagementDialogOpen] = React.useState(false);
   const userMenuRef = React.useRef<HTMLDivElement | null>(null);
-  const displayName = user.name ?? user.email ?? "Usuario";
+  const displayName = user.name ?? user.email ?? t("common.user");
   const isAdmin = user.role === "admin";
 
   React.useEffect(() => {
@@ -124,8 +132,8 @@ export function AppShell({
 
   const activeSprint = sprintQuery.data ?? null;
 
-  const currentPage =
-    navItems.find((item) => item.href === pathname)?.label ?? "AgileFlow";
+  const currentItem = navItems.find((item) => item.href === pathname);
+  const currentPage = currentItem ? t(currentItem.labelKey) : t("common.appName");
 
   return (
     <div className="flex h-screen overflow-hidden bg-canvas">
@@ -143,7 +151,7 @@ export function AppShell({
           </div>
           {!isCollapsed && (
             <span className="truncate font-display text-[15px] font-semibold tracking-tight text-foreground">
-              AgileFlow
+              {t("common.appName")}
             </span>
           )}
         </div>
@@ -153,11 +161,12 @@ export function AppShell({
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
+            const label = t(item.labelKey);
             return (
               <Link
                 href={item.href}
                 key={item.href}
-                title={isCollapsed ? item.label : undefined}
+                title={isCollapsed ? label : undefined}
                 className={cn(
                   "nav-item flex h-9 items-center gap-3 rounded-md px-2.5 text-sm font-medium transition-colors",
                   isActive
@@ -166,7 +175,7 @@ export function AppShell({
                 )}
               >
                 <Icon className="size-4 shrink-0" />
-                {!isCollapsed && <span className="truncate">{item.label}</span>}
+                {!isCollapsed && <span className="truncate">{label}</span>}
               </Link>
             );
           })}
@@ -226,7 +235,7 @@ export function AppShell({
                   type="button"
                 >
                   <UserCog className="size-4 text-muted-foreground" />
-                  Directorio activo
+                  {t("sidebar.activeDirectory")}
                 </button>
                 <button
                   className="flex w-full items-center gap-2 px-3 py-2 text-left text-foreground hover:bg-surface-03"
@@ -238,7 +247,7 @@ export function AppShell({
                   type="button"
                 >
                   <GitBranch className="size-4 text-muted-foreground" />
-                  Migración Jira
+                  {t("sidebar.jiraMigration")}
                 </button>
                 <button
                   className="flex w-full items-center gap-2 px-3 py-2 text-left text-foreground hover:bg-surface-03"
@@ -250,7 +259,7 @@ export function AppShell({
                   type="button"
                 >
                   <Users className="size-4 text-muted-foreground" />
-                  Usuarios
+                  {t("sidebar.users")}
                 </button>
                 <button
                   className="flex w-full items-center gap-2 px-3 py-2 text-left text-foreground hover:bg-surface-03"
@@ -262,7 +271,7 @@ export function AppShell({
                   type="button"
                 >
                   <HardDrive className="size-4 text-muted-foreground" />
-                  Backups
+                  {t("sidebar.backups")}
                 </button>
                 <div className="my-1 border-t border-border-subtle" />
                 <button
@@ -272,7 +281,7 @@ export function AppShell({
                   type="button"
                 >
                   <LogOut className="size-4" />
-                  Cerrar sesión
+                  {t("sidebar.logout")}
                 </button>
               </div>
             ) : null}
@@ -285,11 +294,11 @@ export function AppShell({
                 isCollapsed && "justify-center"
               )}
               onClick={() => signOut({ callbackUrl: "/login" })}
-              title={isCollapsed ? "Cerrar sesión" : undefined}
+              title={isCollapsed ? t("sidebar.logout") : undefined}
               type="button"
             >
               <LogOut className="size-4 shrink-0" />
-              {!isCollapsed && <span>Cerrar sesión</span>}
+              {!isCollapsed && <span>{t("sidebar.logout")}</span>}
             </button>
           ) : null}
         </div>
@@ -300,7 +309,7 @@ export function AppShell({
         {/* Topbar */}
         <header className="flex h-12 shrink-0 items-center gap-3 border-b border-border-subtle bg-canvas px-4">
           <button
-            aria-label={isCollapsed ? "Expandir sidebar" : "Colapsar sidebar"}
+            aria-label={isCollapsed ? t("sidebar.expand") : t("sidebar.collapse")}
             className="flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-02 hover:text-foreground"
             onClick={toggleCollapsed}
             type="button"
@@ -311,12 +320,13 @@ export function AppShell({
               <ChevronLeft className="size-4" />
             )}
           </button>
-          <h1 className="text-sm font-semibold text-foreground">{currentPage}</h1>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="text-sm font-semibold text-foreground">{currentPage}</div>
+          <div className="ml-auto flex items-center gap-3">
             <div className="hidden items-center gap-1.5 text-xs text-muted-foreground sm:flex">
               <UserRound className="size-3.5" />
               <span>{displayName}</span>
             </div>
+            <SettingsToggle />
           </div>
         </header>
 
@@ -345,6 +355,7 @@ export function AppShell({
 }
 
 function SprintHealthWidget({ sprint }: { sprint: ActiveSprintHealthDTO }) {
+  const { t } = useLanguage();
   const donePercent =
     sprint.total > 0 ? Math.round((sprint.done / sprint.total) * 100) : 0;
   const daysLeft =
@@ -358,7 +369,7 @@ function SprintHealthWidget({ sprint }: { sprint: ActiveSprintHealthDTO }) {
   return (
     <div className="mx-2 mb-2 rounded-md border border-border-subtle bg-surface-02 p-3">
       <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-        Sprint activo
+        {t("sprint.active")}
       </p>
       <p className="mb-2 truncate text-xs font-medium text-foreground">
         {sprint.name}
@@ -374,7 +385,7 @@ function SprintHealthWidget({ sprint }: { sprint: ActiveSprintHealthDTO }) {
 
       <div className="flex items-center justify-between text-[10px] text-muted-foreground">
         <span>
-          {sprint.done}/{sprint.total} hechas
+          {t("sprint.done", { done: sprint.done, total: sprint.total })}
         </span>
         {daysLeft !== null ? (
           <span
@@ -383,7 +394,9 @@ function SprintHealthWidget({ sprint }: { sprint: ActiveSprintHealthDTO }) {
               daysLeft > 2 && daysLeft <= 5 && "text-accent-data"
             )}
           >
-            {daysLeft > 0 ? `${daysLeft}d restantes` : "Vence hoy"}
+            {daysLeft > 0
+              ? t("sprint.daysLeft", { days: daysLeft })
+              : t("sprint.dueToday")}
           </span>
         ) : null}
       </div>

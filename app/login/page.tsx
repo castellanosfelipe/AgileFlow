@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { LoginForm } from "@/features/auth/login-form";
+import { LoginScreen } from "@/features/auth/login-screen";
 import { getCurrentUser } from "@/lib/auth";
 
 type LoginPageProps = {
@@ -30,25 +30,5 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     redirect(callbackUrl);
   }
 
-  return (
-    <main className="grid min-h-screen place-items-center bg-background px-4">
-      <div className="w-full max-w-sm space-y-5">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <div className="flex size-8 items-center justify-center rounded-md bg-brand">
-              <svg className="size-4 text-white" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            </div>
-            <span className="text-lg font-semibold tracking-tight text-foreground">AgileFlow</span>
-          </div>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight">
-            Iniciar sesión
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Ingresa tus credenciales para continuar
-          </p>
-        </div>
-        <LoginForm callbackUrl={callbackUrl} />
-      </div>
-    </main>
-  );
+  return <LoginScreen callbackUrl={callbackUrl} />;
 }

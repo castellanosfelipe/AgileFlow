@@ -7,11 +7,17 @@ import { z } from "zod";
 import { authenticateWithLdap, isLdapConfigured } from "@/lib/ldap";
 import { getCurrentUserAccess } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
+import { clearFailures, isRateLimitOk, recordFailure } from "@/lib/rate-limit";
 
 const credentialsSchema = z.object({
   username: z.string().trim().min(1),
   password: z.string().min(1)
 });
+
+// Throttle credential stuffing / brute force: max failed attempts per username
+// within the window. Successful logins reset the counter.
+const LOGIN_MAX_FAILURES = 10;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 
 async function ensureProjectMembership(userId: string) {
   const project = await prisma.project.findFirst({
@@ -115,13 +121,27 @@ export const authOptions: NextAuthOptions = {
         if (!parsed.success) return null;
 
         const { username, password } = parsed.data;
+        const rateKey = `login:${username.toLowerCase()}`;
 
-        if (await isLdapConfigured()) {
-          const ldapUser = await authorizeWithLdap(username, password);
-          if (ldapUser) return ldapUser;
+        if (!isRateLimitOk(rateKey, LOGIN_MAX_FAILURES, LOGIN_WINDOW_MS)) {
+          return null;
         }
 
-        return authorizeWithLocalUser(username, password);
+        let user = null;
+        if (await isLdapConfigured()) {
+          user = await authorizeWithLdap(username, password);
+        }
+        if (!user) {
+          user = await authorizeWithLocalUser(username, password);
+        }
+
+        if (user) {
+          clearFailures(rateKey);
+          return user;
+        }
+
+        recordFailure(rateKey, LOGIN_WINDOW_MS);
+        return null;
       }
     })
   ],
