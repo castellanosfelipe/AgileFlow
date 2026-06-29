@@ -8,7 +8,7 @@ test-results
 coverage
 *.tsbuildinfo
 public/uploads
-backups
+/backups
 outputs
 work
 *.log
