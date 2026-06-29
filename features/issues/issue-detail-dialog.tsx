@@ -520,6 +520,7 @@ export function IssueDetailDialog({
     queryClient.invalidateQueries({ queryKey: ["issue-blocker-options", issue?.id] });
     queryClient.invalidateQueries({ queryKey: ["backlog"] });
     queryClient.invalidateQueries({ queryKey: ["board"] });
+    queryClient.invalidateQueries({ queryKey: ["active-sprint-health"] });
     onChanged?.();
   }
 
@@ -774,6 +775,7 @@ export function IssueDetailDialog({
       queryClient.invalidateQueries({ queryKey: ["project-insights"] });
       queryClient.invalidateQueries({ queryKey: ["board"] });
       queryClient.invalidateQueries({ queryKey: ["backlog"] });
+      queryClient.invalidateQueries({ queryKey: ["active-sprint-health"] });
       setIsStatusEditing(false);
       setIsAssigneeEditing(false);
       setAssigneeSearch("");
@@ -1050,6 +1052,7 @@ export function IssueDetailDialog({
       queryClient.invalidateQueries({ queryKey: ["issue-detail", issueId] });
       queryClient.invalidateQueries({ queryKey: ["backlog"] });
       queryClient.invalidateQueries({ queryKey: ["board"] });
+      queryClient.invalidateQueries({ queryKey: ["active-sprint-health"] });
       onChanged?.();
       onOpenIssue?.(createdIssue.id);
     }

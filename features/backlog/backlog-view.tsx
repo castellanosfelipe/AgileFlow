@@ -196,6 +196,7 @@ export function BacklogView() {
 
   const invalidateBacklog = () => {
     queryClient.invalidateQueries({ queryKey: ["backlog"] });
+    queryClient.invalidateQueries({ queryKey: ["active-sprint-health"] });
   };
 
   const createSprint = useMutation({

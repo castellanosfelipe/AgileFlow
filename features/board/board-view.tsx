@@ -282,6 +282,7 @@ export function BoardView() {
   const invalidateBoard = () => {
     queryClient.invalidateQueries({ queryKey: ["board"] });
     queryClient.invalidateQueries({ queryKey: ["backlog"] });
+    queryClient.invalidateQueries({ queryKey: ["active-sprint-health"] });
   };
 
   const createIssue = useMutation({
