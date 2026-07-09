@@ -319,4 +319,4 @@ Genera automáticamente los 6 screenshots y los 3 GIFs en `docs/`.
 
 ## Licencia
 
-MIT — úsalo, modifícalo, despliégalo en tu infraestructura. Si lo mejoras, un PR es bienvenido.
+AgileFlow está disponible bajo la licencia MIT. Consulta el archivo [`LICENSE`](LICENSE) para ver los términos completos.
