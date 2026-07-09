@@ -1,237 +1,194 @@
-# AgileFlow
+<!-- AgileFlow organiza backlog, sprints, Kanban e indicadores de entrega para equipos de ingenieria que necesitan trabajar rapido sin cargar con la complejidad de Jira. -->
+<div align="center">
+  <img src="docs/screenshots/kanban-board-con-detalle.png" alt="AgileFlow Banner" width="800"/>
 
-**Gestión ágil sin fricción para equipos de ingeniería que no tienen tiempo para aprender Jira.**
+  <h1>AgileFlow</h1>
+  <p><strong>Gestion agil self-hosted para planificar, ejecutar y medir sprints sin friccion operativa.</strong></p>
 
-![Estado](https://img.shields.io/badge/estado-beta-yellow)
-![Next.js](https://img.shields.io/badge/Next.js-15-black)
-![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
-
-**Demo en vivo → [agileflow-indol.vercel.app](https://agileflow-indol.vercel.app)**
-> Usuario: `ana.gomez@example.com` · Contraseña: `password123`
-
-![Pantalla de acceso a AgileFlow en modo oscuro](docs/screenshots/login.png)
-
----
-
-## El problema
-
-Jira resuelve todo excepto lo que más necesita un equipo pequeño: **empezar a trabajar rápido**. Las licencias son caras, la configuración consume días, y la mitad de las funciones nunca se usan pero ralentizan todo lo que sí se usa.
-
-Los equipos de ingeniería de 5 a 25 personas necesitan un backlog, un tablero y una forma de saber cómo va el sprint, no una plataforma enterprise.
-
-AgileFlow es eso: una herramienta ágil self-hosted que se instala en minutos, corre en tu propia infraestructura y cubre exactamente los flujos que un equipo de desarrollo usa todos los días.
+  ![Version](https://img.shields.io/badge/version-0.1.0-blue)
+  ![Status](https://img.shields.io/badge/status-beta-yellow)
+  ![License](https://img.shields.io/badge/license-MIT-orange)
+  ![Next.js](https://img.shields.io/badge/Next.js-15-black)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
+</div>
 
 ---
 
-## La solución
+## 📋 Tabla de Contenidos
 
-### Backlog y planificación de sprints
-
-Desde aquí gestionas el trabajo pendiente en su totalidad. Puedes crear tareas directamente, asignarlas a un sprint, cambiar su prioridad y arrancar el sprint cuando el equipo esté listo, todo sin salir de la misma pantalla.
-
-- Búsqueda en tiempo real por código, título o épica
-- Agrupación por sprint (activo, planificados, backlog)
-- Mover tareas entre sprints con un clic
-- Crear sprint, establecer fechas y objetivo, activar
-- Al completar un sprint: las tareas sin terminar migran automáticamente al siguiente
-
-![Vista del backlog con sprints colapsables y tareas organizadas por épica](docs/screenshots/backlog-sprint-planning.png)
-
----
-
-### Tablero Kanban del sprint activo
-
-El tablero muestra exclusivamente las tareas del sprint en curso, organizadas en tres columnas: Por hacer, En curso y Finalizada. Arrastra las tarjetas para cambiar su estado; el sistema lo guarda de inmediato.
-
-- Drag & drop nativo (funciona en touch y desktop)
-- **Accesible por teclado**: foco en el grip de la tarjeta → `Space` para agarrar → flechas para mover entre columnas → `Space` para soltar
-- Límite WIP en "En curso" (6 tareas): el contador cambia a ámbar al acercarse y a rojo al superarse
-- Agrupación opcional por épica
-- Creación rápida de tarea directamente en la columna
-- Abre el detalle de cualquier tarea como panel lateral, sin perder el contexto del tablero
-
-![Tablero Kanban con tarjetas distribuidas en tres columnas y el panel de detalle abierto a la derecha](docs/screenshots/kanban-board-con-detalle.png)
+- [¿Qué es AgileFlow?](#-qué-es-agileflow)
+- [Demo en vivo](#-demo-en-vivo)
+- [Características principales](#-características-principales)
+- [Capturas de pantalla](#-capturas-de-pantalla)
+- [Instalación rápida](#-instalación-rápida)
+- [Cómo usar](#-cómo-usar)
+- [Arquitectura](#-arquitectura)
+- [Roadmap](#-roadmap)
+- [Contribuir](#-contribuir)
+- [Licencia](#-licencia)
 
 ---
 
-### Panel de detalle de tarea (sin modal)
+## 🎯 ¿Qué es AgileFlow?
 
-Cuando abres una tarea, aparece como un panel deslizante desde la derecha. El tablero sigue visible. Cuando cierras, estás exactamente donde estabas.
+AgileFlow es una herramienta de gestion agil para equipos de ingenieria que necesitan backlog, sprints, tablero Kanban, seguimiento de avance y visibilidad ejecutiva en un solo lugar. Esta pensada para equipos que quieren operar con disciplina sin adoptar una plataforma pesada, costosa o dificil de configurar.
 
-Dentro del panel puedes:
+El producto se instala en infraestructura propia, conserva la trazabilidad del trabajo y ofrece vistas claras para decidir que priorizar, quien esta cargado y que dependencias pueden bloquear la entrega.
 
-- Editar título, descripción, estado, responsable, épica y sprint (auto-guardado)
-- Registrar tiempo trabajado con descripción
-- Añadir comentarios del equipo
-- Adjuntar archivos (arrastrar o seleccionar)
-- Ver subtareas y crearlas en el momento
-- Establecer bloqueos («Bloqueada por» otra tarea)
-- Consultar el historial de auditoría completo
+### El problema que resuelve
 
-![Panel de detalle de tarea deslizando desde la derecha con campos de edición, comentarios y registro de tiempo](docs/screenshots/detalle-tarea-panel.png)
+Muchos equipos pequeños terminan usando herramientas demasiado grandes para su realidad: el tablero se vuelve lento, la configuracion consume tiempo y la informacion de avance queda dispersa entre tickets, reuniones y hojas de calculo.
 
----
+### La solución
 
-### Gantt por responsable
+AgileFlow centraliza el flujo diario del equipo: planifica sprints desde el backlog, mueve tareas en Kanban, registra tiempo, visualiza dependencias y convierte el estado del proyecto en indicadores accionables.
 
-La vista de Gantt muestra todas las tareas del proyecto con sus fechas de inicio y fin, agrupadas por persona asignada. Cambia el zoom entre día, semana, mes y trimestre para encontrar el nivel de detalle que necesitas.
+### ¿Para quién es?
 
-- Indica visualmente quién está sobrecargado (barras apiladas)
-- Detecta fechas sin definir o conflictos de solapamiento
-- Exporta los datos como CSV para compartir con stakeholders externos
-
-![Vista Gantt con barras horizontales por responsable y zoom semanal activo](docs/screenshots/gantt-responsable-semana.png)
+| Audiencia | Beneficio clave |
+|-----------|----------------|
+| Equipos de desarrollo de 5 a 25 personas | Gestionan backlog, sprint activo y seguimiento diario sin depender de una suite enterprise. |
+| Tech leads y Scrum Masters | Ven capacidad, bloqueos, tareas envejecidas y avance del sprint para tomar decisiones con menos reunion improductiva. |
+| Stakeholders y direccion | Consultan una vista ejecutiva con carga, estimaciones, pendientes y señales de riesgo del proyecto. |
+| Administradores internos | Operan usuarios locales o LDAP, migracion desde Jira y backups desde una interfaz unica. |
 
 ---
 
-### Tema claro/oscuro e idioma
+## 🎬 Demo en vivo
 
-Cambia entre modo oscuro y claro, o entre español e inglés, desde cualquier pantalla — el control está en la esquina superior derecha de la barra de navegación y también en la pantalla de acceso.
+**Demo web:** [agileflow-indol.vercel.app](https://agileflow-indol.vercel.app)
 
-- La preferencia se guarda en una cookie y se aplica desde el servidor (sin parpadeo al cargar)
-- Español o inglés: toda la interfaz, incluyendo menús, etiquetas de estado y mensajes de error
-
----
-
-### PERT de dependencias
-
-A partir del campo "Bloqueada por" de cada tarea, el sistema construye automáticamente el grafo de dependencias del proyecto. Sin configuración adicional.
-
-Desde aquí puedes identificar:
-
-- El camino crítico de entrega (la cadena más larga de bloqueadores)
-- Los cuellos de botella: tareas que bloquean a varias otras simultáneamente
-- Las tareas sin dependencias que pueden arrancarse de inmediato
-
-![Diagrama PERT con nodos de tareas conectados por flechas de dependencia y resaltado del camino crítico](docs/screenshots/pert-dependencias.png)
-
----
-
-### Tablero ejecutivo
-
-Diseñado para responder una sola pregunta en menos de 30 segundos: **¿cómo va el equipo?**
-
-Incluye:
-
-- **Daily Resource Load Index**: heatmap de carga de trabajo diaria por persona, con comparación contra jornada estándar de 8h
-- **Seguimiento diario**: tabla de estimaciones, tiempo registrado y tiempo restante por tarea
-- **Pendientes por estimar**: identifica tareas sin estimación que distorsionan la planeación
-- **Cubos de envejecimiento**: agrupa tareas por cuánto tiempo llevan sin moverse
-- Filtros por sprint, responsable y épica; exportación a CSV
-
-![Dashboard ejecutivo con heatmap de carga diaria, tabla de seguimiento y métricas de sprint](docs/screenshots/ejecutivo-resource-load.png)
-
----
-
-## Flujos principales
-
-### Cómo planificar y arrancar un sprint
-
-1. Entra al **Backlog** y crea las tareas de la iteración (o tómalas del backlog existente)
-2. Haz clic en **"Crear sprint"**, define nombre, fechas de inicio/fin y objetivo
-3. Arrastra las tareas al sprint o usa el menú de "Mover a sprint" en cada tarjeta
-4. Haz clic en **"Iniciar sprint"** cuando el equipo esté listo
-5. El sistema mueve automáticamente las tareas al tablero Kanban activo
-
-> Al final del sprint, "Completar sprint" migra las tareas sin terminar al siguiente sprint planificado o al backlog.
-
-[![Vista previa: Flujo completo de creación de sprint, asignación de tareas y activación](docs/videos/flujo-crear-sprint-palette.png)](docs/videos/flujo-crear-sprint.mp4)
-
-<details><summary>Ver animación GIF</summary>
-
-![GIF: Flujo completo de creación de sprint, asignación de tareas y activación](docs/videos/flujo-crear-sprint.gif)
-
-</details>
-
----
-
-### Cómo registrar avance en una tarea
-
-1. Abre el **Tablero Kanban**
-2. Arrastra la tarjeta de "Por hacer" a "En curso"
-3. Haz clic en la tarjeta para abrir el panel de detalle
-4. En la sección de tiempo, registra las horas trabajadas y una descripción
-5. Cierra el panel — el tablero sigue en pantalla sin interrupciones
-
-> El sistema actualiza el tiempo restante en tiempo real y lo refleja en el tablero ejecutivo.
-
-[![Vista previa: Mover una tarea al tablero y registrar tiempo desde el panel lateral](docs/videos/flujo-registrar-avance-palette.png)](docs/videos/flujo-registrar-avance.mp4)
-
-<details><summary>Ver animación GIF</summary>
-
-![GIF: Mover una tarea al tablero y registrar tiempo desde el panel lateral](docs/videos/flujo-registrar-avance.gif)
-
-</details>
-
----
-
-### Cómo detectar carga desequilibrada
-
-1. Ve al **Tablero ejecutivo** desde el menú lateral
-2. En la sección **Daily Resource Load Index** verás el heatmap de cada persona
-3. Las celdas en rojo indican días con más del 100% de carga estimada
-4. Exporta la tabla con el botón de descarga para presentarla en la reunión de refinamiento
-
-> Filtra por sprint o épica para aislar el análisis a un área específica del proyecto.
-
-[![Vista previa: Navegar al ejecutivo, revisar el heatmap de carga y exportar los datos](docs/videos/flujo-revisar-carga-palette.png)](docs/videos/flujo-revisar-carga.mp4)
-
-<details><summary>Ver animación GIF</summary>
-
-![GIF: Navegar al ejecutivo, revisar el heatmap de carga y exportar los datos](docs/videos/flujo-revisar-carga.gif)
-
-</details>
-
----
-
-## Quick start
-
-### Requisitos
-
-- Node.js 20 o superior
-- PostgreSQL 15 o superior
-- (Opcional) Servidor LDAP / Active Directory para autenticación corporativa
-
-### Instalación
-
-```bash
-# 1. Clona el repositorio y entra al directorio
-git clone https://github.com/castellanosfelipe/AgileFlow.git agileflow && cd agileflow
-
-# 2. Instala dependencias
-npm install
-
-# 3. Configura las variables de entorno
-cp .env.example .env.local
-# Edita .env.local con tu DATABASE_URL y NEXTAUTH_SECRET
-
-# 4. Inicializa la base de datos, carga datos de prueba y arranca
-npx prisma migrate deploy && npx prisma db seed && npm run dev
-```
-
-### Verifica que funciona
-
-Abre [http://localhost:3000](http://localhost:3000) e ingresa con las credenciales del seed:
-
-```
-Usuario:    ana.gomez@example.com
+```text
+Usuario: ana.gomez@example.com
 Contraseña: password123
 ```
 
-Deberías ver el backlog con 30 tareas distribuidas en 3 sprints y 5 épicas.
+<div align="center">
+  <img src="docs/videos/flujo-crear-sprint.gif" alt="Demo de creacion de sprint y asignacion de tareas en AgileFlow" width="700"/>
+  <p><em>Flujo principal: crear un sprint, mover tareas desde el backlog y activar el trabajo planificado.</em></p>
+</div>
 
-### Variables de entorno requeridas
+<div align="center">
+  <img src="docs/videos/flujo-registrar-avance.gif" alt="Demo de registro de avance en una tarea desde el tablero Kanban" width="700"/>
+  <p><em>Flujo principal: mover una tarea en Kanban y registrar tiempo desde el panel lateral sin perder contexto.</em></p>
+</div>
 
-| Variable | Descripción |
-|---|---|
-| `DATABASE_URL` | Conexión PostgreSQL (`postgresql://user:pass@host:5432/db`) |
-| `NEXTAUTH_SECRET` | Clave aleatoria para firmar sesiones (mínimo 32 caracteres) |
-| `NEXTAUTH_URL` | URL base del servidor (`http://localhost:3000` en local) |
+---
 
-### Autenticación LDAP / Active Directory (opcional)
+## ✨ Características principales
 
-Si tu equipo usa Active Directory, agrega al `.env.local`:
+| Feature | Descripción |
+|---------|-------------|
+| 🚀 **Backlog y sprints listos para operar** | Crea tareas, organiza epicas, planifica sprints, inicia iteraciones y migra pendientes al cerrar un sprint. |
+| 🧭 **Kanban accesible y accionable** | Mueve tareas con mouse, touch o teclado, filtra por texto, epica, etiqueta o responsable y crea tareas rapidas en el sprint activo. |
+| 📌 **Detalle de tarea con trazabilidad** | Edita estado, responsable, fechas, estimaciones, subtareas, comentarios, adjuntos, bloqueos y worklogs desde un panel lateral. |
+| 📊 **Vistas de planeacion y riesgo** | Usa Gantt, PERT y tablero ejecutivo para entender capacidad, dependencias, carga diaria, envejecimiento y desviaciones de estimacion. |
+| 🔐 **Operacion interna segura** | Soporta login local, LDAP/Active Directory, roles admin/user, usuarios activos/inactivos y auditoria de cambios relevantes. |
+| 🔄 **Migracion y continuidad** | Incluye migracion desde Jira por JQL, backups manuales o programados, validacion de integridad y restauracion controlada. |
+
+---
+
+## 📸 Capturas de pantalla
+
+### Acceso seguro
+<div align="center">
+  <img src="docs/screenshots/login.png" alt="Pantalla de acceso de AgileFlow con tema oscuro" width="750"/>
+  <p><em>Entrada al producto con autenticacion local o directorio corporativo, lista para equipos internos.</em></p>
+</div>
+
+### Backlog y planificación de sprints
+<div align="center">
+  <img src="docs/screenshots/backlog-sprint-planning.png" alt="Backlog de AgileFlow con sprints colapsables y tareas por epica" width="750"/>
+  <p><em>Organiza el trabajo pendiente, prepara sprints y mantiene visible que esta planificado, activo o en backlog.</em></p>
+</div>
+
+### Tablero Kanban con detalle
+<div align="center">
+  <img src="docs/screenshots/kanban-board-con-detalle.png" alt="Tablero Kanban de AgileFlow con panel lateral de detalle abierto" width="750"/>
+  <p><em>Ejecuta el sprint activo con columnas claras y un panel de detalle que evita cambiar de pantalla para actualizar una tarea.</em></p>
+</div>
+
+### Panel de detalle de tarea
+<div align="center">
+  <img src="docs/screenshots/detalle-tarea-panel.png" alt="Panel de detalle de tarea con campos, comentarios, registro de tiempo y auditoria" width="750"/>
+  <p><em>Registra informacion operativa y conserva trazabilidad de cambios, comentarios, adjuntos, subtareas y bloqueos.</em></p>
+</div>
+
+### Gantt por responsable
+<div align="center">
+  <img src="docs/screenshots/gantt-responsable-semana.png" alt="Vista Gantt de AgileFlow agrupada por responsable y zoom semanal" width="750"/>
+  <p><em>Visualiza fechas, solapamientos y carga por persona para anticipar conflictos de planificacion.</em></p>
+</div>
+
+### PERT de dependencias
+<div align="center">
+  <img src="docs/screenshots/pert-dependencias.png" alt="Diagrama PERT con dependencias entre tareas y camino critico resaltado" width="750"/>
+  <p><em>Detecta bloqueadores, cadenas criticas y tareas que pueden destrabar varias lineas de trabajo.</em></p>
+</div>
+
+### Tablero ejecutivo
+<div align="center">
+  <img src="docs/screenshots/ejecutivo-resource-load.png" alt="Tablero ejecutivo con heatmap de carga, seguimiento diario y metricas de sprint" width="750"/>
+  <p><em>Resume salud del sprint, carga diaria, pendientes por estimar, desviaciones y tareas envejecidas para decisiones rapidas.</em></p>
+</div>
+
+---
+
+## 🚀 Instalación rápida
+
+### Prerrequisitos
+
+- Node.js >= 20
+- npm >= 10
+- PostgreSQL >= 15
+- Git
+
+### Pasos
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/castellanosfelipe/AgileFlow.git
+cd AgileFlow
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Configurar variables de entorno
+cp .env.example .env.local
+# Editar .env.local con DATABASE_URL, NEXTAUTH_URL y NEXTAUTH_SECRET
+
+# 4. Inicializar la base de datos, cargar datos demo y ejecutar
+npx prisma migrate deploy
+npx prisma db seed
+npm run dev
+```
+
+✅ Si todo está correcto, verás: `Ready` en la terminal de Next.js y la aplicación disponible en `http://localhost:3000`.
+
+### Alternativa con Docker
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+---
+
+## 💡 Cómo usar
+
+### Caso de uso básico
+
+```text
+1. Abre http://localhost:3000
+2. Inicia sesión con ana.gomez@example.com / password123
+3. Entra al Backlog y revisa los sprints planificados
+4. Inicia un sprint
+5. Abre Kanban y mueve tareas entre Por hacer, En curso y Finalizada
+```
+
+### Casos de uso avanzados
+
+#### Configurar LDAP / Active Directory
 
 ```env
 LDAP_URL=ldap://tu-servidor:389
@@ -240,83 +197,103 @@ LDAP_BIND_PASSWORD=tu-password
 LDAP_BASE_DN=OU=usuarios,DC=empresa,DC=com
 LDAP_USER_FILTER=(objectClass=user)
 LDAP_LOGIN_ATTRIBUTE=sAMAccountName
+LDAP_REQUIRED_GROUP_DN=CN=VPN,CN=Users,DC=empresa,DC=com
 ```
 
-Los usuarios del directorio pueden iniciar sesión de inmediato. Si LDAP no está configurado, el sistema usa autenticación local con email y contraseña.
+#### Migrar tickets desde Jira
 
----
+```text
+1. Abre el menu de usuario administrador
+2. Selecciona Migracion desde Jira
+3. Ingresa URL de Jira, JQL, usuario y token
+4. Usa Probar para validar conexion
+5. Ejecuta Sincronizar para traer tareas al proyecto actual
+```
 
-## Despliegue rápido (Vercel + Neon)
-
-La forma más rápida de publicar AgileFlow sin costo:
+#### Regenerar documentación visual
 
 ```bash
-# 1. Crea una base de datos gratuita en neon.tech y copia la DATABASE_URL
-# 2. Aplica migraciones y carga datos iniciales
-DATABASE_URL="<tu-url-neon>" npx prisma migrate deploy
-DATABASE_URL="<tu-url-neon>" npx prisma db seed
-
-# 3. Instala Vercel CLI y despliega
-npm i -g vercel && vercel --prod
+# Con el servidor corriendo y la base seed cargada
+node scripts/capture-docs.mjs
 ```
 
 ---
 
-## Métricas de éxito
+## 🏗️ Arquitectura
 
-Sabes que AgileFlow está funcionando bien para tu equipo cuando:
+AgileFlow usa Next.js como aplicacion full-stack: el frontend vive en App Router, las rutas API resuelven operaciones del producto y Prisma mantiene el modelo de datos en PostgreSQL. La interfaz consume datos con TanStack Query y concentra la experiencia en vistas de backlog, tablero, analitica, administracion y continuidad operativa.
 
-| Señal | Dónde verla |
-|---|---|
-| El equipo mueve sus propias tarjetas | Tablero Kanban muestra actividad diaria |
-| Las estimaciones se acercan al tiempo real | Seguimiento diario en el ejecutivo muestra ratio < 1.2× |
-| La carga está distribuida | Daily Resource Load Index sin celdas rojas consecutivas |
-| Los sprints se completan sin sorpresas | Tasa de migración al siguiente sprint < 20% |
-| No hay dependencias ocultas | PERT muestra el grafo completo antes de cada sprint |
+### Stack tecnológico
 
----
-
-## Roadmap
-
-| Now | Next | Later |
-|---|---|---|
-| Tablero Kanban con DnD (mouse y teclado) | Columna `authProvider` en modelo de usuarios | Notificaciones push |
-| Panel de detalle slide-in | — | Múltiples proyectos |
-| Daily Resource Load Index | — | Integración GitHub / GitLab |
-| Migración desde Jira (CSV / API) | — | API pública REST |
-| Backups automáticos configurables | — | Vista mobile responsive |
-| Rate limiting en login | — | — |
-| Tema claro/oscuro + idioma ES/EN | — | — |
+| Capa | Tecnología | Propósito |
+|------|-----------|-----------|
+| Frontend | Next.js 15, React 19, Tailwind CSS | Interfaz web, rutas de aplicacion y experiencia responsive. |
+| Estado de servidor | TanStack Query v5 | Carga, cache e invalidacion de datos en vistas interactivas. |
+| Interaccion Kanban | dnd-kit | Drag and drop con soporte para mouse, touch y teclado. |
+| API Backend | Next.js Route Handlers | Endpoints para backlog, tablero, sprints, issues, usuarios, Jira, backups e insights. |
+| Base de datos | PostgreSQL + Prisma 6 | Modelo relacional, migraciones, seed y acceso tipado a datos. |
+| Autenticación | NextAuth v4, bcryptjs, ldapts | Login local, integracion LDAP/Active Directory y control de sesiones. |
+| Validación | Zod | Validacion de formularios, payloads y reglas de negocio. |
+| Calidad | TypeScript estricto, Playwright, tests unitarios con tsx | Tipado, pruebas e2e y cobertura de reglas clave de sprint. |
+| Despliegue | Docker, Vercel compatible | Ejecucion local, contenedores y despliegues serverless con base externa. |
 
 ---
 
-## Stack técnico
+## 🗺️ Roadmap
 
-| Capa | Tecnología |
-|---|---|
-| Frontend | Next.js 15 (App Router), React 19, Tailwind CSS |
-| Estado del servidor | TanStack Query v5 |
-| Drag & Drop | dnd-kit (mouse + teclado) |
-| Base de datos | PostgreSQL + Prisma 6 |
-| Autenticación | NextAuth v4 (local + LDAP) · rate limiting en memoria |
-| Validación | Zod |
-| Tipado | TypeScript estricto, 0 errores |
-| i18n / tema | Cookies SSR sin parpadeo (ES/EN, oscuro/claro) |
+### ✅ Completado
+
+- [x] Backlog con busqueda, filtros, epicas y sprints planificados/activos/completados.
+- [x] Tablero Kanban del sprint activo con drag and drop y soporte de teclado.
+- [x] Panel lateral de detalle con subtareas, comentarios, adjuntos, bloqueos, worklogs y auditoria.
+- [x] Vistas Gantt, PERT y tablero ejecutivo con metricas de carga, estimacion y envejecimiento.
+- [x] Autenticacion local, LDAP/Active Directory, roles admin/user y gestion de usuarios.
+- [x] Migracion desde Jira por JQL, sincronizacion, pruebas de conexion y configuracion persistente.
+- [x] Backups manuales/programados con historial, descarga, validacion de checksum y restauracion.
+- [x] Tema claro/oscuro e idioma español/ingles persistidos con cookies.
+
+### 🔄 En progreso
+
+- [ ] Separar de forma explicita el proveedor de autenticacion por usuario para distinguir cuentas locales y LDAP sin depender del hash interno.
+- [ ] Endurecer la experiencia mobile para los flujos densos de tablero, Gantt y ejecutivo.
+
+### 🔮 Próximamente
+
+- [ ] Notificaciones push o integraciones de alerta para cambios relevantes del sprint.
+- [ ] Soporte para multiples proyectos dentro de una misma instalacion.
+- [ ] Integraciones con GitHub/GitLab para relacionar tareas con ramas, commits y pull requests.
+- [ ] API publica REST para automatizaciones externas.
 
 ---
 
-## Regenerar capturas de pantalla
+## 🤝 Contribuir
 
-Con el servidor corriendo y el seed ejecutado:
+Las contribuciones son bienvenidas. Para cambios funcionales, abre primero un issue con el problema, el flujo afectado y el impacto esperado en usuarios finales.
+
+```bash
+git clone https://github.com/castellanosfelipe/AgileFlow.git
+cd AgileFlow
+npm install
+npx prisma migrate deploy
+npx prisma db seed
+npm run typecheck
+npm run test:unit
+```
+
+Para cambios visuales, actualiza capturas y GIFs con:
 
 ```bash
 node scripts/capture-docs.mjs
 ```
 
-Genera automáticamente los 6 screenshots y los 3 GIFs en `docs/`.
+---
+
+## 📄 Licencia
+
+MIT — ver [`LICENSE`](./LICENSE) para más detalles.
 
 ---
 
-## Licencia
-
-AgileFlow está disponible bajo la licencia MIT. Consulta el archivo [`LICENSE`](LICENSE) para ver los términos completos.
+<div align="center">
+  <p>Hecho con ❤️ por <a href="https://github.com/castellanosfelipe">castellanosfelipe</a></p>
+</div>
