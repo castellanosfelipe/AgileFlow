@@ -56,7 +56,7 @@ AgileFlow centraliza el flujo diario del equipo: planifica sprints desde el back
 
 ## 🎬 Demo en vivo
 
-**Demo web:** [agileflow-indol.vercel.app](https://agileflow.felipepena.co/)
+**Demo web:** [agileflow.felipepena.co](https://agileflow.felipepena.co/)
 
 ```text
 Usuario: ana.gomez@example.com
